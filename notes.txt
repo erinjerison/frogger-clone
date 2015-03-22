@@ -1,0 +1,71 @@
+SAMPLE CODE AND EXPLANATIONS
+
+// Select the item with the id "c"
+var c = document.querySelector("#c");
+
+// Specify the context. In this case, we're building in 2D.
+var ctx = c.getContext("2d");
+
+// Anytime something is drawn and "fill" is specified, fill it with the color blue.
+ctx.fillStyle = "blue";
+
+// start at (100,100) and draw a 100px x 100px blue rectangle
+ctx.fillRect(100,100,100,100);
+// start at (100,100) and clear a 50x50 rectangle
+ctx.clearRect(100,100,50,50);
+
+// erase an entire canvas
+// ctx.clearRect(100,100,c.width,c.height);
+
+// Make sure that every time you create an image, it's a new image
+var image = new Image();
+
+//
+image.onload = function() {
+	console.log("Loaded image");
+	ctx.drawImage(image,0,0,c.width,c.height);
+	var savedImage = c.toDataURL();
+	window.open(savedImage);
+};
+
+// Specify a source image.	
+image.src = "fry_fixed.jpg";
+
+
+
+
+Quiz to draw something on the canvas: Create a triangle within a square.
+	// First, create the rectangle.
+	ctx.strokeRect(50,50,100,100);
+	// Move the cursor to draw within the canvas. First, use beginPath.
+	ctx.beginPath();
+	// Use moveTo() to move the pen to a point on the canvas.
+	ctx.moveTo(75,75);
+	// Create a line, starting at (75,75) and ending at (125,75) the line to (50,50)
+	ctx.lineTo(125,75);
+	// Create another line, starting at (125,75) and drawing to (125,125)
+	ctx.lineTo(125,125);
+	// Not necessary - with these two lines, we can fill, but.. Create a third line to complete the triangle shape, drawing from (125,125) to (75,75)
+	ctx.lineTo(75,75);
+	// Fill the new triangle
+	ctx.fill();
+	// Create an empty triangle with stroke only
+	//ctx.stroke();
+
+GENERAL NOTES
+Canvas2D allows you to translate (move), rotate, or scale objects.
+
+SCALING
+	- scale(x,y): Multiplies x and y values by a given factor. Example:
+		- ctx.scale(2,3); makes all x values twice as large and y values 3 times as large.
+
+TRANSLATION (MOVING)
+	- translate(x,y): Moves all subsequent draw commands by x number of pixels horizontally and y pixels vertically. Example:
+		- ctx.translate(20,40); moves all elements drawn after it 20 pixels to the right and 40 pixels down.
+
+ROTATION
+	- ctx.rotate(angleRadians): Rotates an object a certain number of radians about its center. I'm not good with radians, so:
+		radians = degrees * (Math.PI/180)
+
+ORDER OF OPERATIONS
+	- Scale, then rotate, then translate, in that order.
