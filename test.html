@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+
+<html>
+<head>
+</head>
+<body>
+	<canvas id="c" width="500" height="500"></canvas>
+	<script>
+		var c = document.querySelector("#c");
+		var ctx = c.getContext("2d");
+		
+		// Add text to the canvas
+		// Need to ask: Why didn't this work when I specified font properties (incl. fill and stroke), then added text?
+		ctx.font = "36px impact";
+		// From solution: Center text within the context of the box it's in
+		// ctx.textAlign = "center";
+		ctx.fillStyle="white";
+		ctx.fillText("CANVAS MEMES!",90,90);
+		// From solution: Make sure text is centered on a page
+		// ctx.fillText("CANVAS MEMES!",c.width/2,40)
+		ctx.strokeStyle = "black";
+		ctx.lineWidth = "3px";
+		ctx.strokeText("CANVAS MEMES!",90,90);
+		// From solution: Make sure that text is centered on a page
+		// ctx.strokeText("CANVAS MEMES!",c.width/2,40)
+	</script>
+</body>
+</html>

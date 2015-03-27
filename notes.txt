@@ -31,10 +31,7 @@ image.onload = function() {
 // Specify a source image.	
 image.src = "fry_fixed.jpg";
 
-
-
-
-Quiz to draw something on the canvas: Create a triangle within a square.
+Quiz to move something on the canvas: Create a triangle within a square.
 	// First, create the rectangle.
 	ctx.strokeRect(50,50,100,100);
 	// Move the cursor to draw within the canvas. First, use beginPath.
@@ -69,3 +66,65 @@ ROTATION
 
 ORDER OF OPERATIONS
 	- Scale, then rotate, then translate, in that order.
+
+STACKS
+	- Every canvas contains a stack of drawing states.
+	- Stacks are data structures that only let you push new items at one end. When you retrieve and item, it's the last item that is pushed, AKA Last-In-First-Out (LIFO).
+	- Coding example: Draw a couple of rectangles in different colors. Reassign the fillStyle every time instead of using save and restore methods.
+	var c = document.querySelector("#c");
+	var ctx = c.getContext("2d");
+	
+	ctx.fillStyle = "blue";
+	ctx.fillRect = (0,0,50,50);
+	
+	ctx.fillStyle = "green";
+	ctx.fillRect(100,100,10,10);
+	
+	ctx.fillStyle = "blue";
+	ctx.fillRect(200,10,20,20);
+	
+	// But we can improve it!
+	var c = document.querySelector("#c");
+	var ctx = c.getContext("2d");
+	
+	ctx.fillStyle = "blue";
+	ctx.fillRect(0,0,50,50);
+	
+	// Save state with blue fill.
+	ctx.save();
+	// Create a new rectangle
+	ctx.fillStyle = "green";
+	ctx.fillRect(100,100,10,10);
+	// Restore the blue fill
+	ctx.restore();
+	
+	ctx.fillRect(200,10,20,20);
+	
+	- Canvas states can store the following properties:
+		- Current transformation matrix (rotation, scaling, translation)
+		- strokeStyle
+		- fillStyle
+		- font
+		- globalAlpha
+		- lineWidth
+		- lineCap
+		- lineJoin
+		- miterLimit
+		- shadowOffsetX
+		- shadowOffsetY
+		- shadowBlur
+		- shadowColor
+		- globalCompositeOperation
+		- textAlign
+		- The current clipping region
+
+COLORING
+	- You can change the color of fills and strokes easily:
+	ctx.fillStyle = "blue";
+	ctx.strokeStyle = "#33cc33";
+	ctx.fill();
+
+// Add text to a screen. DO NOT PLACE AT 0,0: The text is placed according to the bottom left corner of the text.
+ctx.strokeText("HELLO UDACITY!", 50, 10); // defines the stroke text
+// Add text to a screen without the outline:
+ctx.fillText("HELLO UDACITY!", 50, 10);
