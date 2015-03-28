@@ -128,3 +128,25 @@ COLORING
 ctx.strokeText("HELLO UDACITY!", 50, 10); // defines the stroke text
 // Add text to a screen without the outline:
 ctx.fillText("HELLO UDACITY!", 50, 10);
+
+
+
+
+The image that backs a canvas is represented by an ImageData object, which contains values for width and height (in pixels) and a data array that contains RGB and alpha values for the pixels.
+	- A data array is represented by a Unint8ClampedArray:
+		- "U": The rate is unsigned/contains only positive values
+		- "int8": Stores 8-bit numbers (0-255)
+	- If JS made it wasy, the data for one pixel would be sort of like this:
+		[[r0,g0,b0,a0],[r1,g1,b1,a1],[r2,g2,b2,a2]...[rn,gn,bn,an]]
+	But JS makes it a giant list that you have to parse when you apply effects
+
+Retrieve or modify image data using:
+	- createImageData: Creates a blank ImageData object that you can modify.
+	- getImageData: Retrieves image data from the backing canvas.
+	- putImageData: Stores image data to the backing canvas.
+
+So if we want to change every 10th pixel to a solid green color, how would we do that?
+	1. Create a Canvas2DRenderingContext.
+	2. Call getImageData to retrieve pixels in the canvas.
+	3. Change every 10th pixel to a solid green color.
+

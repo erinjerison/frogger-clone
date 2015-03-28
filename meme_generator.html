@@ -41,58 +41,39 @@
 		}
 
 		redrawMeme(window.imageSrc, window.topLineText, window.bottomLineText);
-	};
-
-	var imageLoader = document.getElementById("file");
-	imageLoader.addEventListener("change",redrawMeme,false);
-
+	}
+	
 	function redrawMeme(image, topLine, bottomLine) {
 		// Get Canvas2DContext
 		var canvas = document.querySelector('canvas');
 		var ctx = canvas.getContext("2d");
-		// Grab the file so that you can display it later
-		function displayImage(e){
-			var reader = new FileReader();
-			reader.onload = function(event){
-				var img = new Image();
-				img.onload = function(){
-					canvas.width = img.width;
-					canvas.height = img.height;
-					ctx.drawImage(img,0,0);
-				}
-				img.src = event.target.result;
-			}
-			reader.readAsDataURL(e.target.files[0]);
-		};
-		// After you've grabbed the file, display it in the canvas
-		displayImage(image);
+		// Display the image after selecting it
+		if (image != null)
+			ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+
 		// Font properties
 		ctx.font = "36px Impact";
 		ctx.textAlign = "center";
 		ctx.strokeStyle = "black";
 		ctx.lineWidth = 3;
 		ctx.fillStyle = "white";
-		if (topLine != null){
-			ctx.fillText(topLine,canvas.width/2,40);
-			ctx.strokeText(topLine,canvas.width/2,40);
+		
+		// If the Top Line field isn't empty, write whatever text is in it to the canvas
+		if (topLine != null) {
+			ctx.fillText(topLine, canvas.width / 2, 40);
+			ctx.strokeText(topLine, canvas.width / 2, 40);
 		}
-		if (bottomLine != null){
-			ctx.fillText(bottomLine,canvas.width/2,canvas.height-20);
-			ctx.strokeText(bottomLine,canvas.width/2,canvas.height-20);
+		
+		// If the Bottom Line field isn't empty, write whatever text is in it to the canvas
+		if (bottomLine != null) {
+			ctx.fillText(bottomLine, canvas.width / 2, canvas.height - 20);
+			ctx.strokeText(bottomLine, canvas.width / 2, canvas.height - 20);
 		}
-		// Store text in variables
-// 		var topText = document.querySelector("#topLineText").value;
-// 		var bottomText = document.querySelector("#bottomLineText").value;
-		// Add variable text to canvas
-// 		ctx.fillText = (topLine, canvas.width/2, 40);
-// 		ctx.strokeText = (topLine, canvas.width/2, 40);
-// 		ctx.fillText = (bottomLine, canvas.width/2, 480);
-// 		ctx.strokeText = (bottomLine, canvas.width/2, 480);
-	};
+	}
 
 	function saveFile() {
 		window.open(document.querySelector('canvas').toDataURL());
-	};
+	}
 
 	function handleFileSelect(evt) {
 		var canvasWidth = 500;
@@ -100,22 +81,20 @@
 		var file = evt.target.files[0];
  
 		var reader = new FileReader();
-		var data = fileObject.target.result;
 		reader.onload = function(fileObject) {
 			var data = fileObject.target.result;
 
 			// Create an image object
 			var image = new Image();
 			image.onload = function() {
- 
-			window.imageSrc = this;
-			redrawMeme(window.imageSrc, null, null);
-		}
+				window.imageSrc = this;
+				redrawMeme(window.imageSrc, null, null);
+			}
 
-		// Set image data to background image.
-		image.src = data;
-		console.log(fileObject.target.result);
-		}
+			// Set image data to background image.
+			image.src = data;
+			console.log(fileObject.target.result);
+		};
 		reader.readAsDataURL(file)
 	}
 
