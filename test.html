@@ -6,39 +6,28 @@
 <body>
 	<canvas id="canvas" width="500" height="500"></canvas>
 	<script>
-		// Change every 10th pixel in a canvas to a solid green color
-		// 1. Create a 2d rendering context for the canvas
-		var c = document.querySelector("#canvas");
+	// 1. Create a 2d rendering context for the canvas
+		var canvas = document.querySelector("canvas");
 		var ctx = canvas.getContext("2d");
 		
-		ctx.fillStyle = "green";
-		ctx.fillRect(0,0,1,1);
-		
-		// 2. Use getImageData to retrieve the pixels in the canvas.
-		// ImageData objects store width, height, and a data array that stores [RGBA] values
-		// syntax: ctx.getImageData(startPointX, startPointY, width, height)
-		var imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-		console.log(imgData);
-		// Returns {height: 500, width: 500, data: Uint8ClampedArray(rgba)}
-		
-		// 3. Change every 10th pixel to a solid green color.
-		function makeGreenX() {
-			ctx.putImageData(imgData, 10, 0);
+	// 2. getImageData: retrieve information about canvas as a whole
+		var data = ctx.getImageData(0,0,400,400);
+	
+	// 3. Change every 10th pixel to green color
+		function paintGreen(imageData) {
+			// first, figure out the number of pixels stored in the getImageData array
+			var numPixels = imageData.data.length / 4;
+			// Then, use a for loop to iterate through the canvas and find every 10th pixel.
+			for (var i = 0; i < numPixels; i++) {
+				if (i % 10 === 0) {
+					imageData.data[i * 4 + 1] = 255;
+					imageData.data[i * 4 + 3] = 255;
+				}
+			}
+			ctx.putImageData(imageData,0,0);
 		}
-		function makeGreenY() {
-			ctx.putImageData(imgData, 0, 10);
-		}
-		var iX = imgData[0] + 10;
-		do {
-			makeGreenX();
-		}
-		while (iX < canvas.width);
-		var iY = imgData[1] + 10;
-		do {
-			makeGreenY();
-		}
-		while (iY < canvas.height);
-		
+	// 4. Make the script run.
+		paintGreen(data);
 	</script>
 </body>
 </html>
